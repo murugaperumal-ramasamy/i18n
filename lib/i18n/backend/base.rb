@@ -241,6 +241,8 @@ module I18n
         def load_yml(filename)
           begin
             Psych.load_file(filename)
+          rescue Psych::SyntaxError
+            Syck.load_file(filename)
           rescue TypeError, ScriptError, StandardError => e
             raise InvalidLocaleData.new(filename, e.inspect)
           end
